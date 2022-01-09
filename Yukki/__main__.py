@@ -237,7 +237,7 @@ All commands can be used with: / """
 
 
 @app.on_message(filters.command("Sunni") & filters.private)
-async def help_command(_, message):
+async def sunni_command(_, message):
     text, keyboard = await help_parser(message.from_user.mention)
     await app.send_message(message.chat.id, text, reply_markup=keyboard)
 
@@ -290,7 +290,7 @@ async def start_command(_, message):
                     f"{message.from_user.mention} has just started bot to check <code>SUDOLIST</code>\n\n**USER ID:** {sender_id}\n**USER NAME:** {sender_name}",
                 )
         if name == "Sunni":
-            text, keyboard = await help_parser(message.from_user.mention)
+            text, keyboard = await sunni_parser(message.from_user.mention)
             await message.delete()
             return await app.send_text(
                 message.chat.id,
@@ -369,7 +369,7 @@ async def start_command(_, message):
     return
 
 
-async def help_parser(name, keyboard=None):
+async def sunni_parser(name, keyboard=None):
     if not keyboard:
         keyboard = InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "Sunni"))
     return (
@@ -391,14 +391,14 @@ async def shikhar(_, CallbackQuery):
     await CallbackQuery.message.edit(text, reply_markup=keyboard)
 
 
-@app.on_callback_query(filters.regex(r"help_(.*?)"))
-async def help_button(client, query):
-    home_match = re.match(r"help_home\((.+?)\)", query.data)
-    mod_match = re.match(r"help_module\((.+?)\)", query.data)
-    prev_match = re.match(r"help_prev\((.+?)\)", query.data)
-    next_match = re.match(r"help_next\((.+?)\)", query.data)
-    back_match = re.match(r"help_back", query.data)
-    create_match = re.match(r"help_create", query.data)
+@app.on_callback_query(filters.regex(r"sunni_(.*?)"))
+async def sunni_button(client, query):
+    home_match = re.match(r"sunni_home\((.+?)\)", query.data)
+    mod_match = re.match(r"sunni_module\((.+?)\)", query.data)
+    prev_match = re.match(r"sunni_prev\((.+?)\)", query.data)
+    next_match = re.match(r"sunni_next\((.+?)\)", query.data)
+    back_match = re.match(r"sunni_back", query.data)
+    create_match = re.match(r"sunni_create", query.data)
     top_text = f"""Hello {query.from_user.first_name},
 
 Click on the buttons for more information.
@@ -409,7 +409,7 @@ All commands can be used with: /
         module = mod_match.group(1)
         text = (
             "{} **{}**:\n".format(
-                "Here is the help for", HELPABLE[module].__MODULE__
+                "Here is the sunni for", HELPABLE[module].__MODULE__
             )
             + HELPABLE[module].__SUNNI__
         )
@@ -444,7 +444,7 @@ All commands can be used with: /
         await query.message.edit(
             text=top_text,
             reply_markup=InlineKeyboardMarkup(
-                paginate_modules(curr_page - 1, HELPABLE, "help")
+                paginate_modules(curr_page - 1, HELPABLE, "sunni")
             ),
             disable_web_page_preview=True,
         )
@@ -454,7 +454,7 @@ All commands can be used with: /
         await query.message.edit(
             text=top_text,
             reply_markup=InlineKeyboardMarkup(
-                paginate_modules(next_page + 1, HELPABLE, "help")
+                paginate_modules(next_page + 1, HELPABLE, "sunni")
             ),
             disable_web_page_preview=True,
         )
@@ -463,13 +463,13 @@ All commands can be used with: /
         await query.message.edit(
             text=top_text,
             reply_markup=InlineKeyboardMarkup(
-                paginate_modules(0, HELPABLE, "help")
+                paginate_modules(0, HELPABLE, "sunni")
             ),
             disable_web_page_preview=True,
         )
 
     elif create_match:
-        text, keyboard = await help_parser(query)
+        text, keyboard = await sunni_parser(query)
         await query.message.edit(
             text=text,
             reply_markup=keyboard,
