@@ -68,8 +68,8 @@ async def initiate_bot():
             ):
                 imported_module.__MODULE__ = imported_module.__MODULE__
                 if (
-                    hasattr(imported_module, "__HELP__")
-                    and imported_module.__HELP__
+                    hasattr(imported_module, "__SUNNI__")
+                    and imported_module.__SUNNI__
                 ):
                     HELPABLE[
                         imported_module.__MODULE__.lower()
@@ -236,7 +236,7 @@ A Telegram Music+Video Streaming bot with some useful features.
 All commands can be used with: / """
 
 
-@app.on_message(filters.command("help") & filters.private)
+@app.on_message(filters.command("Sunni") & filters.private)
 async def help_command(_, message):
     text, keyboard = await help_parser(message.from_user.mention)
     await app.send_message(message.chat.id, text, reply_markup=keyboard)
@@ -289,7 +289,7 @@ async def start_command(_, message):
                     LOG_GROUP_ID,
                     f"{message.from_user.mention} has just started bot to check <code>SUDOLIST</code>\n\n**USER ID:** {sender_id}\n**USER NAME:** {sender_name}",
                 )
-        if name == "help":
+        if name == "Sunni":
             text, keyboard = await help_parser(message.from_user.mention)
             await message.delete()
             return await app.send_text(
@@ -371,7 +371,7 @@ async def start_command(_, message):
 
 async def help_parser(name, keyboard=None):
     if not keyboard:
-        keyboard = InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help"))
+        keyboard = InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "Sunni"))
     return (
         """Hello {first_name},
 
@@ -411,7 +411,7 @@ All commands can be used with: /
             "{} **{}**:\n".format(
                 "Here is the help for", HELPABLE[module].__MODULE__
             )
-            + HELPABLE[module].__HELP__
+            + HELPABLE[module].__SUNNI__
         )
         key = InlineKeyboardMarkup(
             [
