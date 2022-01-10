@@ -366,29 +366,7 @@ async def start_command(_, message):
             LOG_GROUP_ID,
             f"{message.from_user.mention} has just started Bot.\n\n**USER ID:** {sender_id}\n**USER NAME:** {sender_name}",
         )
-    return
-
-
-async def sunni_parser(name, keyboard=None):
-    if not keyboard:
-        keyboard = InlineKeyboardMarkup(paginate_modules(0, SUNNI, "Sunni"))
-    return (
-        """Hello {first_name},
-
-Click on the buttons for more information.
-
-All commands can be used with: /
-""".format(
-            first_name=name
-        ),
-        keyboard,
-    )
-
-
-@app.on_callback_query(filters.regex("sunni"))
-async def shikhar(_, CallbackQuery):
-    text, keyboard = await help_parser(CallbackQuery.from_user.mention)
-    await CallbackQuery.message.edit(text, reply_markup=keyboard)
+=keyboard)
 
 
 @app.on_callback_query(filters.regex(r"sunni_(.*?)"))
