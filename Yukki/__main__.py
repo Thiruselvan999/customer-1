@@ -371,7 +371,7 @@ async def start_command(_, message):
 
 async def sunni_parser(name, keyboard=None):
     if not keyboard:
-        keyboard = InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "Sunni"))
+        keyboard = InlineKeyboardMarkup(paginate_modules(0, SUNNI, "Sunni"))
     return (
         """Hello {first_name},
 
@@ -409,15 +409,15 @@ All commands can be used with: /
         module = mod_match.group(1)
         text = (
             "{} **{}**:\n".format(
-                "Here is the sunni for", HELPABLE[module].__MODULE__
+                "Here is the sunni for", SUNNI[module].__MODULE__
             )
-            + HELPABLE[module].__SUNNI__
+            + SUNNI[module].__SUNNI__
         )
         key = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        text="↪️ Back", callback_data="help_back"
+                        text="↪️ Back", callback_data="SUNNI_back"
                     ),
                     InlineKeyboardButton(
                         text="🔄 Close", callback_data="close"
@@ -444,7 +444,7 @@ All commands can be used with: /
         await query.message.edit(
             text=top_text,
             reply_markup=InlineKeyboardMarkup(
-                paginate_modules(curr_page - 1, HELPABLE, "sunni")
+                paginate_modules(curr_page - 1, SUNNI, "sunni")
             ),
             disable_web_page_preview=True,
         )
@@ -454,7 +454,7 @@ All commands can be used with: /
         await query.message.edit(
             text=top_text,
             reply_markup=InlineKeyboardMarkup(
-                paginate_modules(next_page + 1, HELPABLE, "sunni")
+                paginate_modules(next_page + 1, SUNNI, "sunni")
             ),
             disable_web_page_preview=True,
         )
@@ -463,7 +463,7 @@ All commands can be used with: /
         await query.message.edit(
             text=top_text,
             reply_markup=InlineKeyboardMarkup(
-                paginate_modules(0, HELPABLE, "sunni")
+                paginate_modules(0, SUNNI, "sunni")
             ),
             disable_web_page_preview=True,
         )
